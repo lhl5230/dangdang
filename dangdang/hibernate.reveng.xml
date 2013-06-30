@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table name="d_book" catalog="dangdang"
+		class="com.tarena.pojo.Book">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table name="d_category_product" catalog="dangdang"
+		class="com.tarena.pojo.CategoryProduct">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table name="d_category" catalog="dangdang"
+		class="com.tarena.pojo.Category">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table name="d_item" catalog="dangdang"
+		class="com.tarena.pojo.Item">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table name="d_order" catalog="dangdang"
+		class="com.tarena.pojo.Order">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table name="d_product" catalog="dangdang"
+		class="com.tarena.pojo.Product">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+	<table name="d_receive_address" catalog="dangdang"
+		class="com.tarena.pojo.ReceiveAddress">
+		<primary-key>
+			<generator class="native"></generator>
+		</primary-key>
+	</table>
+<table name="d_user" catalog="dangdang" class="com.tarena.pojo.User">
+	<primary-key>
+		<generator class="native"></generator>
+	</primary-key>
+</table>
+</hibernate-reverse-engineering>

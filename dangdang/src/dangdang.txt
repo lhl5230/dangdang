@@ -1,0 +1,297 @@
+1.梁建全 liangjq@tarena.com.cn (不要使用QQ邮箱)
+2.项目简介
+   该系统是模拟当当网部分主要功能.主要包括以下模块
+   a.用户管理(3天) user
+      包括登录,登出,注册,邮箱验证等
+   b.产品浏览模块(2天) main
+      包括主界面,分类浏览,产品详细等
+   c.购物车模块(1.5天) cart
+      包括购买,删除,恢复,修改数量,统计金额等
+   d.生成订单模块(1.5天) order
+      包括订单确认,填写送货地址,生成订单等
+3.项目采用的技术
+   Struts2,Hibernate,jQuery,Ajax
+   系统采用MVC和分层设计思想.
+   表现层:负责与用户交互,主要是JSP组件.(jQuery,Ajax)
+   控制层:负责请求和处理的转发, 
+         主要由Struts框架负责,例如Strutrs控制器和Action组件(Struts)
+   业务层:负责业务逻辑处理,例如Service组件(Bean)
+   数据访问层:负责数据操作,主要是DAO组件(Bean,Hibernate)
+4.项目数据库设计
+   a. d_user 用户信息表
+       负责存储用户的注册信息.与登录,注册功能相关
+   b.d_receive_address 用户收货地址信息表
+       负责存储用户使用过的收货地址信息.与填写送货地址功能相关
+   c.d_product 产品信息表
+       负责存储各种类型的产品共通属性信息.
+   d.d_book 图书信息表
+       负责存储图书产品的特有信息
+   e.d_category 产品类别信息表
+       负责存储产品的类别信息.与类别显示功能有关
+   f.d_category_product 类别和产品对应关系表
+       负责执行哪种类别包含哪些商品.与类别浏览功能有关
+   g.d_order 订单信息表
+       负责存储了订单的基本信息.
+   h.d_item 订单明细信息表
+        负责存储了订单包含哪些商品,单价,数量等信息.
+
+5.搭建dangdang工程结构
+    1)导入开发包
+        a.struts2开发包
+           struts2-core.jar,
+           xwork.jar,
+           ognl.jar,
+           freemarker.jar,
+           commons-io.jar
+           commons-fileupload.jar,
+           struts2-json-plugin.jar
+        b.hibernate开发包+数据库驱动
+           将以前提供的jar包引入
+    2)配置文件
+       web.xml (配置Struts2 Filter控制器)
+       struts.xml (Struts2主配置文件)
+       struts-user.xml(用户管理配置)
+       struts-main.xml(产品浏览配置)
+       struts-cart.xml(购物车配置)
+       struts-order.xml(订单配置)
+       hibernate.cfg.xml(Hibernate主配置)
+    3)src结构
+       org.tarena.dang.action(控制层)
+       org.tarena.dang.action.user(用户管理模块控制层)
+       org.tarena.dang.action.cart(购物车管理模块控制层)
+       org.tarena.dang.action.main(产品浏览管理模块控制层)
+       org.tarena.dang.action.order(订单管理模块控制层)
+       org.tarena.dang.service(业务层)
+       org.tarena.dang.dao(数据访问层)
+       org.tarena.dang.pojo(实体类+hbm.xml)
+       org.tarena.dang.util(工具类)
+       org.tarena.dang.interceptor(自定义拦截器)
+
+    4)WebRoot结构
+        /css : 样式文件
+        /images : 页面图片文件
+        /js : js脚本文件
+        /user : 用户管理模块的JSP
+        /main : 产品浏览模块的JSP
+        /cart : 购物车模块的JSP
+        /order : 订单模块的JSP
+        /common : 共通JSP,页眉,页脚等
+        /productImages : 产品图片
+       
+=============Struts2总结===============
+1.第一天重点
+   1)了解Struts2的MVC结构及其主要工作流程
+    a. Struts2框架是MVC模式的实现.具体实现结构如下:
+      C控制器: 由Action(分),StrutsPrepareAndExecuteFilter(主)
+      V视图:提供了支持,比如标签,ognl,Result组件
+      M模型:提供了支持,比如 ValueStack组件
+      拦截器封装了共通的处理,可以认为是模型部分.
+    b. Struts2主要工作流程
+      --客户浏览器发送请求,请求到达Filter主控制器
+      --主控制器进行请求过滤, 区分Action请求和非Action请求
+      --如果是Action请求(/login或/login.action),创建ValueStack对象
+         根据配置文件调用拦截器,Action,Result组件依次处理.
+      --调用拦截器做一些前期处理,比如将请求参数给Action对象属性赋值.之后调用Action的execute方法
+      --执行完execute方法,返回一个String类型视图标识
+      --主控制器根据视图标识调用Result组件对象,生成视图响应信息
+      --主控制器再调用拦截器做一些后期处理.
+      --将响应结果信息返回给浏览器
+
+   *2)掌握Struts2基本使用(hello示例,列表示例)
+      --导入开发包
+      --配置Filter控制器
+      --添加struts.xml配置文件
+      --根据请求编写Action组件
+          定义属性变量
+           input,output
+          定义execute业务方法
+           根据输入数据,处理,之后生成输出数据.
+      --在struts.xml中配置Action组件
+
+public class ListAction{
+   //input 无
+   //output
+    private List<Project> pros;
+
+   public String execute(){
+        ProjectDAO proDao = new ProjectDAO();
+        pros = proDao.findAll();
+        return "success";
+   }
+
+}
+
+
+2.第二天重点
+   1)了解OGNL技术和ValueStack结构
+      Struts2标签是利用OGNL技术访问ValueStack中的数据.
+      熟悉下OGNL表达式.
+      熟悉下ValueStack结构
+   *2)掌握Struts2标签的使用
+      掌握debug,property,if...else...,iterator,date等标签使用
+
+3.第三天重点
+   1)了解下Action原理
+      --一个请求创建一个Action对象处理,不存在并发性
+      --请求到达Filter控制器,控制会创建一个ValueStack对象,
+         把Action对象压入valuestack root区栈顶位置
+      --请求处理时,调用Action的execute业务方法
+      --请求处理完毕时,Action对象会从root栈顶弹出,自动销毁
+
+   *2)掌握Action组件一些相关应用
+      *a. 如何使用Session,Request等对象.
+         --实现Aware接口方式.(在Action中使用)
+         --利用ActionContext,ServletActionContext工具类
+           (在Action之外使用)
+      *b.Action属性注入
+       <action name="" class="">
+           <param name="属性名">值</param>
+       </action>
+      c.通配符在<action>配置中的使用
+4.第四天重点
+   1)了解Result组件原理
+      --所有Result组件的实现类都实现了Result接口
+         并实现该接口指定的 public void execute(ActionInvocation in)
+
+public class MyDispacherResult implements Result{
+    private String location;//setter方法
+     public void execute(ActionInvocation in){
+         //采用转发方式调用一个指定jsp
+      HttpServletRequest req = ServletActionContext.getRequest();
+  HttpServletResponse res = ServletActionContext.getResponse();
+      RequestDispatcher rd = req.getRequestDispatcher(location);
+       rd.forward(req,res);
+     }
+}
+   --将Result实现类在<package>中注册定义
+    <package name="包名">
+       <result-types>
+           <result-type name="result类型" class="实现类">
+           </result-type>
+           //.......其他result类型定义
+       </result-types>
+   </package>
+
+   *2)掌握常用几种Result组件类型的使用
+      --将<action>所在package继承result组件定义的package
+      --使用时,采用<result type="result类型"></result>
+     a.JSP响应可以采用dispatcher和redirect
+         <result type="dispatcher">/login.jsp</result>
+         <result type="dispatcher">
+	<param name="location">/login.jsp</param>
+         </result>
+     b.Action响应可以采用chain和redirectAction
+        <result type="chain">
+           <param name="actionName">list</param>
+           <param name="namespace">/user</param>
+        </result>
+*.action--->Action1--转发或重定向--->Action2
+      c.stream响应可以采用stream
+        可以将Action中一个InputStream类型的属性值以流方式输出
+         <result type="stream">
+              <param name="inputName">属性</param>
+         </result>
+       d.json响应可以采用json类型
+           可以将Action中属性值以json格式给客户端输出
+         ----------仅输出action中的一个属性值------------ 
+         <result type="json">
+              <param name="root">属性名</param>
+          </result>
+         ----------输出action中的多个属性值------------ 
+         <result type="json">
+              <param name="includeProperties">
+                 属性名1,属性名2....
+              </param>
+          </result>
+         ----------输出action中所有属性值--------------
+          <result type="json"></result>
+        ----------使用json之前的注意事项-----------------
+        --引入struts-json-plugin.jar
+        --将<package>元素的extends指定为json-default
+
+5.第五天重点   params
+      1)了解Interceptor的原理
+           a.拦截器实现类必须实现Interceptor接口,并实现
+             public String interceptor(ActionInvocation in){
+                   //前期处理逻辑
+          in.invoke();//调用下一个拦截器,没有拦截器调用Action,Result
+                   //后期处理逻辑
+             }
+          
+        public class MyParams implements Interceptor{
+             public String interceptor(ActionInvocation in){
+                   //将请求参数获取,给action赋值
+          ValueStack vs = in.getStack();
+          Map<String,Object> params = 
+                              vs.findValue("#parameters");
+         //循环map元素,调用下面设置代码,将值给Action属性赋值
+          vs.setValue("OGNL表达式",值);
+          in.invoke();//调用下一个拦截器,没有拦截器调用Action,Result
+             }
+         }
+
+         b.将拦截器实现类注册定义
+          <package>
+               <interceptors>
+                   <interceptor name="拦截器名" class="实现类"/>
+                   //......其他拦截器定义
+               <interceptors>
+          </package>
+         c.拦截器使用
+             ----------为所有Action设置默认拦截器----------------
+             <default-interceptor-ref name="defaultStack"/>
+             ----------为某一个Action单独指定拦截器------------
+             <action name="" class="">
+                  <interceptor-ref name="拦截器名1"/>
+                  <interceptor-ref name="defaultStack"/>
+             </action>
+             -----------拦截器使用的注意事项-------------------
+             如果为Action指定了拦截器引用<interceptor-ref/>,
+默认的defaultStack不会再调用,需要显式指定引用
+ 
+      *2)掌握自定义和内置拦截器的使用
+        fileUpload内置拦截器的使用
+========Hibernate总结==========
+1.第一部分重点
+   1)Hibernate原理
+      基于ORM设计思想,将JDBC封装.
+
+   *2)掌握Hibernate基本使用
+      (对单表进行增删改查操作)
+ Configuration-->SessionFactory-->Session->Query|Transaction
+      session.save(),session.delete(),session.update(),
+      session.load()|session.get()
+2.第二部分重点
+   1)框架基本特性
+       延迟加载,一级缓存,对象持久性
+       a.延迟加载
+          --什么时候有延迟加载现象.
+            load(),iterator(),关联属性默认采用延迟加载
+          --使用延迟加载应注意的问题.
+           不要将Session过早关闭,采用OpenSessionInView模式控制
+User user = (User)session.load(User.class,1);
+user.getName();--->jsp-->${user.name}
+//采用拦截器后期处理,采用Filter后期处理-->OpenSessionInView
+session.close();
+
+   2)框架高级特性
+       二级缓存,查询缓存,锁机制等
+3.第三部分重点
+   1)掌握关联映射
+      一对多关联
+      多对一关联
+      多对多关联
+      一对一关联
+      继承关联
+4.第四部分重点
+    1)Hibernate查询
+      --HQL查询(推荐)
+      --SQLQuery查询
+      --QBC查询
+   
+
+
+
+
+
+   

@@ -1,0 +1,53 @@
+1.Action--->Service--->DAO
+(处理复杂请求)Action--->Service--->DAO
+(处理简单请求)Action--->DAO
+2.Action------->Service------->DAO
+降低Action和Service,Service和DAO之间的耦合度.
+Action---->ServiceFactory---->Service
+Service---->DaoFactory---->DAO
+前期开发困难不大,可以考虑引入Factory结构,降低各层组件之间的耦合度.
+============================
+3.产品浏览页面(book_list.jsp)需求
+   当用户点击类别菜单中的某个类别后,进入book_list.jsp显示页面.
+可以分页浏览该类别中所包含的产品.
+   a.左侧小类别菜单区域
+      显示用户选中类别的同级别的(兄弟)类别信息.
+      类别()中显示该类别所包含的产品数量
+      全部()中显示当前所有类别所包含的产品数量之和.
+      用户选中的类别采用特殊样式处理.
+   b.右侧产品显示区域
+      显示用户选中类别中的产品列表.
+      分页显示浏览,默认显示第一页产品信息
+      支持用户分页操作.
+   可以根据上架时间,价格,销量等排序(先不做,其他功能做完可以选做) 
+   c.涉及的数据表
+     d_product,d_book,d_category,d_category_product
+     d_category---->d_category_product<----d_product
+     上面三个表体现了一种多对多关系.表示category和product是多对多关系.
+   d.设计功能流程
+ booklist.action-->BookListAction-->CategoryDAO,ProductDAO
+ -->d_category,d_product等-->book_list.jsp
+=============================
+根据类别ID查找产品信息
+-------------SQL----------------
+select dp.*,db.*
+from d_category_product dcp 
+         join d_product dp on(dcp.product_id=dp.id)
+         join d_book db on(dp.id=db.id)
+where cat_id=?
+--------------HQL---------------
+select p
+from Category c
+         join c.关系属性(关联到product一端) p
+where c.id=?
+建立由Category到Product的多对多关系映射
+--在Category实体类添加关联属性Set<Prodocut>
+--在Category.hbm.xml中添加属性的映射描述
+
+
+select dp.*
+from d_category_product dcp 
+	join d_product dp on(dcp.product_id=dp.id)
+where dcp.cat_id = 9
+order by dang_price;
+

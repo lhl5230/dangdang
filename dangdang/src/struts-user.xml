@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<!-- 用户管理模块配置 -->
+<struts>
+	<package name="user" extends="dang-default" namespace="/user">
+	
+		<!-- 用户注册 -->
+		<action name="register" class="com.tarena.action.user.RegisterAction">
+			<!-- 防止表单重复提交 -->
+			<interceptor-ref name="dangStack"></interceptor-ref>
+			<interceptor-ref name="token"></interceptor-ref>
+			<!-- 如果重复提交，跳转到指定页面 -->
+			<result name="invalid.token">/user/verify_form.jsp</result>
+			<result name="verify">/user/verify_form.jsp</result>
+		</action>
+		
+		<!-- 用户登陆 -->
+		<action name="login" class="com.tarena.action.user.LoginAction">
+			<!--<result name="success" type="redirect">/main/main.jsp</result>
+			<result name="verify">/user/verify_form.jsp</result>
+			 <result name="error">/user/login_form.jsp</result> -->
+			<result name="success" type="json">
+				<param name="root">success</param>
+			</result>
+			<result name="verify" type="json">
+				<param name="root">verify</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">error</param>
+			</result>
+			<!--  -->
+			<result name="prePage" type="json">
+				<param name="root">prePage</param>
+			</result>
+			
+		</action>
+		
+		<!-- 只负责记录登陆前的地址 -->
+		<action name="login2">
+			<result>/user/login_form.jsp</result>
+			<interceptor-ref name="loginStack2"></interceptor-ref>	
+		</action>
+		
+		<!-- 检测邮箱是否可用 -->
+		<action name="checkemail" class="com.tarena.action.user.CheckEmailAction">
+			<result type="json">
+				<param name="root">ok</param>
+			</result>
+		</action>
+		
+		<!-- 检测邮箱验证码是否正确 -->
+		<action name="verifycode" class="com.tarena.action.user.EmailVerifyCodeAction">
+			<result type="json">
+				<param name="root">ok</param>
+			</result>
+		</action>
+		<!-- 注册图片验证码 -->
+		<action name="imageCode" class="com.tarena.action.user.ImageGeneratorAction">
+			<result type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">imageSteam</param>
+				<param name="bufferSize">2048</param>
+			</result>
+		</action>
+		<!-- 检测验证码图片输入是否正确 -->
+		<action name="imageVerify" class="com.tarena.action.user.ImageValidatorAction">
+			<result type="json">
+				<param name="root">ok</param>
+			</result>
+		</action>
+	</package>
+</struts>

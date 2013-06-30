@@ -1,0 +1,52 @@
+========订单创建模块介绍============
+用户从购物车点结算,进入订单创建模块,依次执行
+订单确认,填写送货地址和订单创建成功提示功能.
+1)订单确认
+   功能: 从购物车中提取确认购买的商品,列表显示
+   前置条件: 用户如果登录,点击购物车结算,才进入订单确认界面
+                  如果未登录,将用户跳转到登录页面.
+    登录检查实现提示: 编写一个登录检查的拦截器,然后将拦截器
+         给结算请求对应的Action添加启用配置.
+2)填写送货地址
+    功能: 用户填写送货地址信息后,点"下一步"按钮,将购物车信息生成一个订单.
+    点"下一步"按钮,具体细节功能: 
+       a.首先需要向d_order表写入一条订单记录.
+       b.然后再向d_item表写入若干条记录.
+    (根据订单确认列表写入,有几条列表记录,就向d_item写入几条记录)
+       c.将购物车中的数据清除.
+       e.如果 选择地址项为:"填写新地址"需要将收货地址信息,写入d_receive_address表.
+          如果选择地址项不是"填写新地址",不需要写入.
+======写入d_order和d_item记录===========
+       Order order = new Order();
+        //设置order属性信息
+      OrderDAO.save(order);//写入d_order表
+     //根据购物车数据,循环多次调用下面item写入  
+     Item item1 = new Item();
+     //设置order_id值
+     item1.setOrderId(order.getId());
+       //设置item1属性信息
+      ItemDAO.save(item1);//写入d_item表
+
+=======选择地址下拉单功能==========
+a.下拉单加载d_receive_address信息,生成option选项
+   页面出来触发ajax请求,加载address信息.
+  流程设计: loadAddress.action-->LoadAddressAction
+-->AddressDAO(取出当前用户的地址信息)
+-->调用json result将数据给ajax请求的回调函数
+-->ajax回调函数解析数据,生成Option选项.
+
+b.选项发生改变,触发onchange事件,发出ajax请求,加载表单数据.
+   流程设计: findAddress.action--->FindAddressAction
+-->AddressDAO(取出某一个Address地址信息)
+-->调用json result将数据给ajax请求的回调函数
+-->ajax回调函数解析数据,将数据填充到表单项中
+
+ 
+
+
+
+       
+
+
+
+

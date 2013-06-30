@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<!-- 用户管理模块配置 -->
+<struts>
+	<package name="dang-order" namespace="/order" extends="dang-default">
+		
+		
+		<!-- 点订单结算后 -->
+		<action name="order" class="com.tarena.action.order.OrderAction">
+			<result name="login">/user/login_form.jsp</result>
+			<result>/order/order_info.jsp</result>	
+			<!-- 启用登陆拦截器 -->
+			<interceptor-ref name="loginStack"></interceptor-ref>			
+		</action>
+		
+		<!--  更改下拉列表的地址后，发送请求，把对应的地址写入到表单中 -->
+		<action name="selectAddress" class="com.tarena.action.order.SelectAddressAction">
+			<result type="json">
+				<param name="root">address</param>
+			</result>
+		</action>
+		
+		<!-- 填写地址页面出来后，发送的请求，获取用户保存过的地址 -->
+		<action name="loadAddress" class="com.tarena.action.order.LoadAddressAction">
+
+			<result type="json">
+				<param name="root">addresses</param>
+			</result>
+			
+		</action>
+		
+		<!-- 确认订单，成功提交订单,订单生成 -->
+		<action name="affirmOrder" class="com.tarena.action.order.AffirmOrderAction">
+			<!-- 防止表单重复提交 -->
+			<interceptor-ref name="dangStack"></interceptor-ref><!-- 事物拦截器 -->
+			<interceptor-ref name="token"></interceptor-ref>
+			<!-- 如果重复提交，跳转到指定页面 -->
+			<result name="invalid.token">/order/order_ok2.jsp</result>	
+			<result>/order/order_ok.jsp</result>
+		</action>
+		
+	</package>
+</struts>

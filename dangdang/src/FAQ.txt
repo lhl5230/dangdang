@@ -1,0 +1,29 @@
+1.购物车中修改商品数量的时候，还没有修改为只能输入数字。
+	删除的时候，要弹出小对话框确认是否删除删除。
+	在修改数量左边和右边分别放一个加号减号图标，用来添加和删除一个商品。当商品数量为1的时候，再按减号的图标就
+	弹出对话框是否删除此商品
+	
+	
+2.关闭浏览器后购物车的内容没有了。
+
+3.分页显示的时候，http://localhost:8080/dangdang/main/booklist.action?pid=2&catId=9&currentPage=2
+	currentPage可以手动输入不是数字的树，会报错。已经修改了输入的数字大于最大页数的时候显示最后一页。
+	当当网的操作是显示 ：没有找到商品返回上一页(图片为桌面sorry.png) , 返回上一页添加的一个连接 (javascript:history.go(-1))
+	
+4.图书热卖 ，新书热卖模块没完成
+
+5.图书列表的排序没完成。（可以按销量，价格排序）
+
+6.Status Code:
+    HTTP/1.1 304 Not Modified 是什么意思
+	
+7.怎样用链接(a标签发送ajax请求)....ajax发送请求，回调函数可以省略掉吗？	
+	
+8.在购物车列表下面，添加最近浏览过的产品	
+
+添加地址的时候
+org.hibernate.StaleStateException: Batch update returned unexpected row count from update [0]; actual row count: 0; expected: 1
+把saveOrUpdate(addr) 改成 save(addr);
+
+
+	

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<!-- 用户管理模块配置 -->
+<struts>
+	<package name="main" namespace="/main" extends="dang-default">
+		<!-- main页面的显示 -->
+		<action name="main">
+			<result>/main/main.jsp</result>
+		</action>
+		<!-- 用户退出 -->
+		<action name="logout" class="com.tarena.action.main.LoginOutAction">
+			
+			<result type="redirect">/main/main.jsp</result>
+		</action>
+		
+		<!-- 查找最新上架的书籍 -->
+		<action name="new" class="com.tarena.action.main.NewAction">
+			<result>/main/new.jsp</result>
+		</action>
+		
+		<!-- 分类信息浏览 -->
+		<action name="category" class="com.tarena.action.main.CategoryAction">
+			<result>/main/category.jsp</result>
+		</action>
+		
+		<!-- 编辑推荐商品 -->
+		<action name="recommend" class="com.tarena.action.main.RecommendAction">
+			<result>/main/recommend.jsp</result>
+		</action>
+		
+		<!-- 中间热销产品 -->
+		<action name="hot" class="com.tarena.action.main.HotAction">
+			<result>/main/hot.jsp</result>
+		</action>
+		
+		<!-- 右边热销产品 -->
+		<action name="newhot" class="com.tarena.action.main.NewHotAction">
+			<result>/main/newhot.jsp</result>
+		</action>
+		
+		<!-- 图书列表显示 -->
+		<action name="booklist" class="com.tarena.action.main.BookListAction">
+			<param name="pageSize">3</param>
+			<result>/main/book_list.jsp</result>
+		</action>
+		
+		<!-- 图书详细信息 -->
+		<action name="productdetail" class="com.tarena.action.main.ProductDetailsAction">
+			<result>/main/product.jsp</result>
+		</action>
+		
+		<!-- 搜索产品 -->
+		<action name="search" class="com.tarena.action.main.SearchAction">
+			<result>/main/book_search.jsp</result>
+		</action>
+	</package>
+
+		
+		
+</struts>

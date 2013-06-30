@@ -1,0 +1,95 @@
+=========系统事务处理============
+1.采用拦截器封装开启事务,结束事务,关闭Session的操作
+2.删除DAO中与事务和Session关闭相关的代码
+3.将拦截器设置为默认拦截器.作用到所有Action上面.
+
+
+=========产品浏览模块需求===========
+1)main.jsp主界面功能
+   a.左侧类别浏览区域
+      显示d_category类别表中的图书类别信息.
+    findCategory.action--->CategoryAction--->CategoryDAO
+    --->d_category--->category.jsp
+
+   将数据从d_category取出,然后封装成一个List<Category>集合
+ (parent_id=1),将其他数据封装到每一个Category对象的subCats中.
+
+   b.中间编辑推荐区域
+      随机获取d_product,d_book表中两个产品显示.
+-------------利用SQLQuery执行下面SQL语句----------------
+select * 
+from d_product dp 
+    join d_book db on(dp.id=db.id) 
+order by rand() 
+limit 0,2;
+使用时注意一下两点:
+ --追加Book和Product之间的继承关系映射
+ --利用Hibernate的SQLQuery执行上述SQL语句,
+   利用Book类封装一行记录
+
+   c.中间热销图书区域
+      根据订单销量统计,取出销量最高的前4个产品显示.
+
+select dp.*
+from d_item di join d_product dp on(di.product_id=dp.id) 
+group by di.product_id order by sum(di.product_num) desc limit 0,4;      
+    
+       (d_item,d_product)
+=========将下面SQL转成HQL,执行==============
+select dp.*
+from d_item di 
+     join d_product dp on(di.product_id=dp.id)
+group by di.product_id
+order by sum(di.product_num) desc
+limit 0,2;
+上述SQL采用HQL写法如下
+使用时注意事项:
+ --建立Item到Product之间的关联映射(多对一关系)
+     将原有productId属性及映射信息删除
+ --将上述SQL转成HQL
+
+select dp
+from Item di 
+        join di.pro dp 
+group by di.pro.id
+order by sum(di.productNum) desc
+//分页形式执行,替代limit
+
+
+    d.中间最新上架图书区域
+       根据上架时间取出最近上架的8个产品显示.
+       (d_product)
+     
+      findNew.action--->NewAction--->ProductDAO.findNew()
+      --->d_product--->new.jsp
+
+EL-->(page,request,root栈对象属性,session,application)
+struts2将request进行了封装,StrutsRequestWrapper类.
+使用Struts2后,JSP中的request使用的是StrutsRequestWrapper
+即:
+HttpServletRequest request = new StrutsRequestWrapper();
+---------StrutsRequestWrapper类结构-----------------------
+public class StrutsRequestWrapper extends ServletRequestWrapper{
+     //方法重写
+    public Object getAttribute(String key){
+         Object val = super.getAtrribute(key);
+         if(val == null){
+             //没取到去ValueStack取
+             val = valuestack.findValue(key);
+         }
+         return val;
+    }
+}
+
+${size}-->request.getAttribute("size")-->
+super(request).getAttribute("size")-->
+valuestack.findValue("size");--->
+取出了ValueStack中root栈顶对象Action的size属性.
+
+     e.右侧新书热卖榜区域
+        显示近一个月上架,销量最高的前10个产品信息.
+        (提示:模仿热销图书查询,追加上架时间限定条件就可以) 2592000000
+select dp.*
+from d_item di join d_product dp on(di.product_id=dp.id and dp.add_time >1369366139523) 
+group by di.product_id order by sum(di.product_num) desc limit 0,10;  
+  

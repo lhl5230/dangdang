@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<!-- 用户管理模块配置 -->
+<struts>
+	<package name="cart" namespace="/cart" extends="dang-default">
+		<!-- 添加到购物车item -->
+		<action name="buy" class="com.tarena.action.cart.BuyAction">
+			<result type="json">
+				<param name="root">ok</param>
+			</result>
+		</action>
+		
+		<!-- 显示购物车 -->
+		<action name="cartlist" class="com.tarena.action.cart.CartListAction" method="list">
+			<result>/cart/cart_list.jsp</result>
+		</action>
+		
+		<!-- 删除商品 -->
+		<action name="delete" class="com.tarena.action.cart.CartListAction" method="delete">
+			<result type="redirectAction">cartlist</result>
+		</action>
+		
+		<!-- 恢复商品 -->
+		<action name="recover" class="com.tarena.action.cart.CartListAction" method="recover">
+			<result type="redirectAction">cartlist</result>
+		</action>
+		
+		<!-- 修改商品数量 -->
+		<action name="modify" class="com.tarena.action.cart.CartListAction" method="modify">
+			<result type="chain">cartlist</result> 
+			<!--<result type="json">
+				<param name="root">count</param>
+			</result>-->
+		</action>
+		
+		<!-- 清空购物车 -->
+		<action name="clear" class="com.tarena.action.cart.CartListAction" method="clear">
+			<result type="redirectAction">cartlist</result>
+		</action>
+		
+	</package>
+</struts>

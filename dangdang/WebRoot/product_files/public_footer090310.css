@@ -1,0 +1,57 @@
+.public_footer {
+	CLEAR: both; BORDER-TOP: #707070 1px solid; FONT-SIZE: 12px; BACKGROUND: #fff; MARGIN: 0px auto; WIDTH: 962px; COLOR: #666; WORD-BREAK: break-all; LINE-HEIGHT: 20px; FONT-FAMILY: ËÎÌו,Arial,Helvetica,sans-serif
+}
+.public_footer IMG {
+	BORDER-TOP-WIDTH: 0px; DISPLAY: inline; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+.public_footer A {
+	FONT-SIZE: 12px; CURSOR: pointer; COLOR: #1a66b3; FONT-FAMILY: "ËÎÌו"; TEXT-DECORATION: none
+}
+.public_footer A:hover {
+	TEXT-DECORATION: underline
+}
+.public_footer_list1 {
+	PADDING-RIGHT: 30px; BORDER-TOP: #c1c1c1 2px solid; PADDING-LEFT: 30px; BACKGROUND: url(http://img4.ddimg.cn/homeimg/foot_line.jpg) #fff no-repeat right top; FLOAT: left; PADDING-BOTTOM: 40px; WIDTH: 118px; PADDING-TOP: 7px
+}
+.public_footer_list2 {
+	PADDING-RIGHT: 30px; BORDER-TOP: #c1c1c1 2px solid; PADDING-LEFT: 30px; BACKGROUND: url(http://img4.ddimg.cn/homeimg/foot_bg.jpg) repeat-x 50% top; FLOAT: left; PADDING-BOTTOM: 40px; WIDTH: 190px; PADDING-TOP: 7px
+}
+.public_footer_title {
+	PADDING-LEFT: 10px; FONT-WEIGHT: 700; FONT-SIZE: 14px; BACKGROUND: url(http://img4.ddimg.cn/homeimg/foot_point.jpg) no-repeat 0px 6px; COLOR: #404040
+}
+.public_footer_info {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; LINE-HEIGHT: 22px; PADDING-TOP: 15px
+}
+.public_footer_bottom {
+	CLEAR: both
+}
+.public_footer_bottom_simple {
+	CLEAR: both; MARGIN-TOP: 15px
+}
+.public_footer_red {
+	MARGIN-BOTTOM: 10px; COLOR: #c30; TEXT-ALIGN: center
+}
+.public_footer_red A:link {
+	COLOR: #c30; TEXT-DECORATION: none
+}
+.public_footer_red A:visited {
+	COLOR: #c30; TEXT-DECORATION: none
+}
+.public_footer_red A:hover {
+	TEXT-DECORATION: underline
+}
+.public_footer_icp {
+	PADDING-BOTTOM: 20px; COLOR: #666; TEXT-ALIGN: center
+}
+.public_footer_black_404040:link {
+	COLOR: #404040; TEXT-DECORATION: none
+}
+.public_footer_black_404040:visited {
+	COLOR: #404040; TEXT-DECORATION: none
+}
+.public_footer_black_404040:hover {
+	COLOR: #404040; TEXT-DECORATION: underline
+}
+.public_footer_add_s {
+	MARGIN: 0px auto; WIDTH: 962px; HEIGHT: 20px; BACKGROUND-COLOR: #fff
+}

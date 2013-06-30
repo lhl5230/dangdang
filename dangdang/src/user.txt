@@ -1,0 +1,86 @@
+------利用MyEclipse生成Hibernate的POJO和hbm文件--------
+1.进入DB Browser 创建一个与dangdang的数据库连接
+2.为dang工程添加MyEclipse提供的Hibernate框架
+    (点工程右键--->MyEclipse-->Add Hibernate....)
+    第一步选择Hibernate版本,不用操作,下一步
+    第二步指定hibernate.cfg.xml,选择exits项使用工程已存在的
+    第三步生成一个HibernateUtil工具类.可以将HibernateSessionFactory改名,指定存在的util包路径
+3.进入DB Browser,反向生成pojo和hbm.xml
+   第一步:选中要生成的数据表(8个)
+   第二步:右键-->Hibernate Reverse Engineering
+   第三步:指定pojo和hbm所在的dang工程及包路径.
+              选中前三个checkbox
+   第四步:指定映射类型,将Java Types改为Hibernate Types
+   第五步:点击每个数据表,为表单独指定"包名.类名"和主键生成方式
+             设置完后,点击完成按钮.
+4.移除dang工程中添加MyEclipse的Hibernate框架jar包.
+
+
+
+--------------用户管理模块需求及实现-------------------
+1.用户注册功能实现
+  1)了解需求及相关数据表
+    表单项目通过客户端js+Ajax检查,提交到服务器完成注册处理.
+    a.客户端检查项目
+       Email地址:非空,格式,唯一性(ajax)
+       昵称:非空,长度4-20 (中文表示2个)
+       密码:非空,长度6-20 (字母和数字)
+       确认密码:非空,与密码项是否一致
+       验证码:非空,正确性(ajax)
+     b.服务器处理
+       将用户注册信息写入d_user表
+       生成邮箱验证码
+       给用户邮箱发送验证码
+       进入邮箱验证页面
+  2)相关数据表结构(d_user)
+  *3)先实现服务器端处理, 设计一个处理流程
+/user/register.action-->RegisterAction-->UserDAO-->d_user
+  *4)编写UserDAO接口及其实现类
+       根据数据表的操作,定义接口的方法,编写实现类
+   *5)编写RegisterAction类
+    *6)在struts配置RegisterAction组件
+    *7)编写JSP页面,测试程序
+        
+=========js校验处理方法========
+需求: 焦点离开Email输入框进行检查
+事件源  ---- Email输入框 
+事件 --- 焦点离开
+处理函数做什么 --- 非空,格式等检查
+
+唯一性检查
+ ajax请求(/user/checkemail.action)-->CheckEmailAction-->
+ UserDAO-->d_user
+============================
+
+2)验证邮箱页面
+   用户输入验证码后,检查验证码正确性.
+  a)客户端处理
+     验证码: 非空,正确性(ajax)
+  b)服务器处理
+      去d_user验证email_verify_code是否正确
+      如果正确,修改该用户的is_email_verify字段值,设置为"Y",进入register_ok.jsp
+      如果不正确,在verify_form.jsp给出提示
+   (提示:Action以json格式返回一个boolean值,客户端回调函数
+   根据boolean值决定是显示错误信息还是跳转页面)
+3)登录处理
+    用户输入Email和Password后,通过客户端格式检查后,执行服务器端处理.
+  a. 客户端处理
+     Email:非空,格式检查
+     密码:非空
+  b. 服务器处理
+     去d_user表检查Email和密码是否匹配.
+     如果is_email_verify="N",转向到verify_form.jsp验证邮箱
+     更新last_login_time和last_login_ip
+     将user信息写入session
+     进入到/main/main.jsp
+4)页眉登录状态显示处理
+   head.jsp页眉显示用户状态
+   如果用户登录,显示"您好XXX，欢迎光临当当网 [登出]"
+   如果未登录,显示"您好，欢迎光临当当网 [登录 | 注册]"
+     
+   
+     
+     
+
+
+

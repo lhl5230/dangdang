@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>
+	<!-- 加载各模块配置文件 -->
+	<include file="struts-user.xml"/>
+	<include file="struts-cart.xml"/>
+	<include file="struts-order.xml"/>
+	<include file="struts-main.xml"/>
+	
+	<package name="dang-default" extends="json-default">
+		<!-- 定义Action,自定义拦截器等组件 -->
+		<interceptors>
+			<!-- 事物拦截器 -->
+			<interceptor name="transaction" class="com.tarena.interceptor.TransactionInterceptor"></interceptor>
+			<interceptor-stack name="dangStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="transaction"></interceptor-ref>
+			</interceptor-stack>
+			
+			<!-- 其他页面因权限问题，需要登陆才能访问时，登陆的拦截器 -->
+			<interceptor name="login" class="com.tarena.interceptor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="dangStack"></interceptor-ref>
+				
+				<interceptor-ref name="login"></interceptor-ref>
+			</interceptor-stack>
+			
+			<!-- 在主页面点击登陆的拦截器 -->
+			<interceptor name="login2" class="com.tarena.interceptor.LoginInterceptor2"></interceptor>
+			<interceptor-stack name="loginStack2">
+				<interceptor-ref name="dangStack"></interceptor-ref>
+				
+				<interceptor-ref name="login2"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<!-- 启用 -->
+		<default-interceptor-ref name="dangStack"></default-interceptor-ref>
+		
+	</package>
+</struts>

@@ -1,0 +1,171 @@
+* {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+BODY {
+	FONT-SIZE: 12px; COLOR: #404040; FONT-FAMILY: ËÎÌו,Arial,Helvetica,sans-serif
+}
+A {
+	COLOR: #1a66b3; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #1a66b3; TEXT-DECORATION: underline
+}
+IMG {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+* UL {
+	LIST-STYLE-TYPE: none
+}
+* OL {
+	LIST-STYLE-TYPE: none
+}
+* LI {
+	LIST-STYLE-TYPE: none
+}
+H1 {
+	FONT-WEIGHT: normal; FONT-SIZE: 12px
+}
+H2 {
+	FONT-WEIGHT: normal; FONT-SIZE: 12px
+}
+H3 {
+	FONT-WEIGHT: normal; FONT-SIZE: 12px
+}
+H4 {
+	FONT-WEIGHT: normal; FONT-SIZE: 12px
+}
+H5 {
+	FONT-WEIGHT: normal; FONT-SIZE: 12px
+}
+H6 {
+	FONT-WEIGHT: normal; FONT-SIZE: 12px
+}
+.dashed {
+	FONT-SIZE: 0px; BACKGROUND: url(../images/dashed.gif) repeat-x; LINE-HEIGHT: 1px; HEIGHT: 1px
+}
+.dot {
+	LETTER-SPACING: -3px
+}
+.clear {
+	CLEAR: both; FONT-SIZE: 0px; LINE-HEIGHT: 0px; HEIGHT: 0px
+}
+.del {
+	TEXT-DECORATION: line-through
+}
+.s12 {
+	FONT-SIZE: 12px
+}
+.s14 {
+	FONT-SIZE: 14px
+}
+.b {
+	FONT-WEIGHT: bold
+}
+.red {
+	COLOR: #c30
+}
+.red A {
+	COLOR: #c30
+}
+.red A:hover {
+	COLOR: #c30
+}
+.gray {
+	COLOR: #878787
+}
+.gray A {
+	COLOR: #878787
+}
+.gray A:hover {
+	COLOR: #878787
+}
+.white {
+	COLOR: #fff
+}
+.white A {
+	COLOR: #fff
+}
+.white A:hover {
+	COLOR: #fff
+}
+.black {
+	COLOR: #000
+}
+.black A {
+	COLOR: #000
+}
+.black A:hover {
+	COLOR: #000
+}
+.blue {
+	COLOR: #1a66b3
+}
+.blue A {
+	COLOR: #1a66b3
+}
+.blue A:hover {
+	COLOR: #1a66b3
+}
+.orange {
+	COLOR: #ff7100
+}
+.orange A {
+	COLOR: #ff7100
+}
+.orange A:hover {
+	COLOR: #ff7100
+}
+.red_9d {
+	COLOR: #9d6363
+}
+.red_9d A {
+	COLOR: #9d6363
+}
+.red_9d A:hover {
+	COLOR: #9d6363
+}
+.red_85 {
+	COLOR: #853200
+}
+.red_85 A {
+	COLOR: #853200
+}
+.red_85 A:hover {
+	COLOR: #853200
+}
+.gray_6 {
+	COLOR: #666
+}
+.gray_6 A {
+	COLOR: #666
+}
+.gray_6 A:hover {
+	COLOR: #666
+}
+.gray_40 {
+	COLOR: #404040
+}
+.gray_40 A {
+	COLOR: #404040
+}
+.gray_40 A:hover {
+	COLOR: #404040
+}
+.gray_9e {
+	COLOR: #9e9e9e
+}
+.gray_9e A {
+	COLOR: #9e9e9e
+}
+.gray_9e A:hover {
+	COLOR: #9e9e9e
+}
+.gray_7f {
+	COLOR: #7f7f7f
+}
+.gray_7f A {
+	COLOR: #7f7f7f
+}
+.gray_7f A:hover {
+	COLOR: #7f7f7f
+}
